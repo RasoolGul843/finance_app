@@ -17,52 +17,42 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 50.h, horizontal: 20.w),
+        padding: EdgeInsets.symmetric(vertical: 90.h, horizontal: 20.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: Image.asset(
-                AppImages.loginImage,
-                height: 48.h,
-                width: 48.w,
-              ),
+              child: Text("Welcome Back", style: AppTextStyles.headingbold),
             ),
-            Center(child: Text("Sanctuary", style: AppTextStyles.headingbold)),
             Center(
               child: Text(
-                "Create your financial safe haven",
+                "Sign in to Lumina Finance to continue your\n                              journey.",
                 style: AppTextStyles.subHeading.copyWith(
-                  fontSize: 18.sp,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            Text(
-              "Full Name",
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0.6.w,
+            SizedBox(height: 20.h),
+            Center(
+              child: CustomButton(
+                height: 59,
+                width: 280.w,
+                text: "Continue with Google",
+                leftIcon: "assets/icons/SVG.png",
+                backgroundColor: Colors.grey,
+                borderRadius: 16,
+                textStyle: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xff2C3437),
+                ),
+                onTap: () {},
               ),
             ),
-            SizedBox(height: 8.5.h),
-            CustomTextField(
-              width: 342.w,
-              labelText: "Enter Your Legal Name",
-              fillColor: Color(0xfffF0F4F7),
-              height: 58.h,
-              borderRadius: 16,
-              labelFontSize: 16.sp,
-              labelColor: Color(0xffff747C8099),
+            SizedBox(height: 20.h),
+            Center(child: Text("OR EMAIL")),
 
-              prefixIcon: Image.asset(
-                AppImages.userIcon,
-                height: 16.h,
-                width: 16.w,
-                fit: BoxFit.contain,
-              ),
-            ),
             SizedBox(height: 23.h),
             Text(
               "EMAIL ADDRESS",
@@ -88,16 +78,29 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 16.w,
                 fit: BoxFit.contain,
               ),
-              isPassword: true,
             ),
             SizedBox(height: 23.h),
-            Text(
-              "PASSWORD",
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0.6.w,
-              ),
+            Row(
+              children: [
+                Text(
+                  "PASSWORD",
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.6.w,
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  "PASSWORD",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.6.w,
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 8.5.h),
             CustomTextField(
@@ -117,6 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               isPassword: true,
             ),
+            SizedBox(height: 30.h),
             Center(
               child: CustomButton(
                 height: 59,
@@ -131,6 +135,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Color(0xffFFFFFF),
                 ),
                 onTap: () {},
+              ),
+            ),
+
+            SizedBox(height: 40.h),
+            Center(
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "Don't have an account?  ",
+                      style: TextStyle(color: Color(0xff596064), fontSize: 16),
+                    ),
+                    TextSpan(
+                      text: "Sign Up",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

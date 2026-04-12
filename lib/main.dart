@@ -1,4 +1,7 @@
+import 'package:finance_app/view/app_screens/authentication_screens/create_new_password.dart';
+import 'package:finance_app/view/app_screens/authentication_screens/forget_screen.dart';
 import 'package:finance_app/view/app_screens/authentication_screens/splash_screen.dart';
+import 'package:finance_app/view/app_screens/home_screen/navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,7 +21,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: const SplashScreen(),
+          home: const HomeScreen(),
         );
       },
     );
