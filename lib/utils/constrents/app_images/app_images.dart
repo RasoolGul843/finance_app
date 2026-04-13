@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class AppImages {
   static const String appLogo = "assets/images/app_logo.png";
   static const String loginImage = "assets/images/loginImage.png";
@@ -7,4 +9,12 @@ class AppImages {
   static const String forgetIcon = "assets/icons/forgetIcon.png";
   static const String backArrow = "assets/icons/backArrow.png";
   static const String newpasswordIcon = "assets/icons/newpasswordIcon.png";
+  static const String addIcon = "assets/icons/addIcon.png";
+  static const String homeIcon = "assets/icons/homeIcon.png";
+  static const String historyIcon = "assets/icons/historyIcon.png";
+  static const String goalIcon = "assets/icons/goalIcon.png";
+  static const String addExpensesIcon = "assets/icons/addExpenses.png";
+  static const String addNewGoalIcon = "assets/icons/addNewGoal.png";
+  static const String addNewIncomeIcon = "assets/icons/addNewIncome.png";
+  static const String addReciepnt = "assets/icons/addReciepnt.png";
 }

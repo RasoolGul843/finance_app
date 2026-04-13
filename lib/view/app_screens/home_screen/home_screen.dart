@@ -1,4 +1,7 @@
 import 'package:finance_app/utils/constrents/app_images/app_images.dart';
+import 'package:finance_app/view/app_screens/home_screen/body_screen.dart';
+import 'package:finance_app/view/app_screens/home_screen/goal_screen.dart';
+import 'package:finance_app/view/app_screens/home_screen/home_view_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,16 +12,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int selectedIndex = 1;
+  int selectedIndex = 0;
 
   final List<String> labels = ["HOME", "HISTORY", "ADD", "GOALS", "PROFILE"];
 
   final List<String> icons = [
-    AppImages.passwordIcon,
-    AppImages.passwordIcon,
-    AppImages.passwordIcon,
-    AppImages.passwordIcon,
-    AppImages.passwordIcon,
+    AppImages.homeIcon,
+    AppImages.historyIcon,
+    AppImages.addIcon,
+    AppImages.goalIcon,
+    AppImages.userIcon,
+  ];
+
+  // 🔹 Screens List
+  final List<Widget> screens = const [
+    HomeViewScreen(),
+    HistoryView(),
+    BodyScreen(),
+    GoalScreen(),
+    ProfileView(),
   ];
 
   @override
@@ -26,12 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
 
-      body: Center(
-        child: Text(
-          labels[selectedIndex],
-          style: const TextStyle(fontSize: 24),
-        ),
-      ),
+      // 🔹 Show selected screen
+      body: screens[selectedIndex],
 
       bottomNavigationBar: Container(
         margin: const EdgeInsets.all(12),
@@ -57,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // 🔹 Asset Icon
+                  // 🔹 Icon
                   Image.asset(
                     icons[index],
                     height: 24,
@@ -84,6 +92,39 @@ class _HomeScreenState extends State<HomeScreen> {
           }),
         ),
       ),
+    );
+  }
+}
+
+class HistoryView extends StatelessWidget {
+  const HistoryView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text("History Screen", style: TextStyle(fontSize: 24)),
+    );
+  }
+}
+
+class AddView extends StatelessWidget {
+  const AddView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text("Add Screen", style: TextStyle(fontSize: 24)),
+    );
+  }
+}
+
+class ProfileView extends StatelessWidget {
+  const ProfileView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text("Profile Screen", style: TextStyle(fontSize: 24)),
     );
   }
 }
