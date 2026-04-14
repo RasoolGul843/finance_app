@@ -2,6 +2,7 @@ import 'package:finance_app/view/app_screens/authentication_screens/create_new_p
 import 'package:finance_app/view/app_screens/authentication_screens/forget_screen.dart';
 import 'package:finance_app/view/app_screens/authentication_screens/splash_screen.dart';
 import 'package:finance_app/view/app_screens/home_screen/body_screen.dart';
+import 'package:finance_app/view/app_screens/home_screen/connect_bank_screen.dart';
 import 'package:finance_app/view/app_screens/home_screen/home_screen.dart';
 import 'package:finance_app/view/app_screens/home_screen/new_goal_screen.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: const HomeScreen(),
+          home: const ConnectBankScreen(),
         );
       },
     );

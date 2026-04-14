@@ -1,7 +1,9 @@
 import 'package:finance_app/utils/constrents/app_images/app_images.dart';
 import 'package:finance_app/view/app_screens/home_screen/body_screen.dart';
 import 'package:finance_app/view/app_screens/home_screen/goal_screen.dart';
+import 'package:finance_app/view/app_screens/home_screen/history_screen.dart';
 import 'package:finance_app/view/app_screens/home_screen/home_view_screen.dart';
+import 'package:finance_app/view/app_screens/home_screen/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,10 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
   // 🔹 Screens List
   final List<Widget> screens = const [
     HomeViewScreen(),
-    HistoryView(),
+    HistoryScreen(),
     BodyScreen(),
     GoalScreen(),
-    ProfileView(),
+    ProfileScreen(),
   ];
 
   @override
@@ -92,39 +94,6 @@ class _HomeScreenState extends State<HomeScreen> {
           }),
         ),
       ),
-    );
-  }
-}
-
-class HistoryView extends StatelessWidget {
-  const HistoryView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text("History Screen", style: TextStyle(fontSize: 24)),
-    );
-  }
-}
-
-class AddView extends StatelessWidget {
-  const AddView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text("Add Screen", style: TextStyle(fontSize: 24)),
-    );
-  }
-}
-
-class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text("Profile Screen", style: TextStyle(fontSize: 24)),
     );
   }
 }

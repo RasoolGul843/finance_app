@@ -17,4 +17,5 @@ class AppImages {
   static const String addNewGoalIcon = "assets/icons/addNewGoal.png";
   static const String addNewIncomeIcon = "assets/icons/addNewIncome.png";
   static const String addReciepnt = "assets/icons/addReciepnt.png";
+  static const String searchIcon = "assets/icons/searchIcon.png";
 }
