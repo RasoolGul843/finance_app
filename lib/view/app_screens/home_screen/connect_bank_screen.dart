@@ -37,114 +37,254 @@ class _ConnectBankScreenState extends State<ConnectBankScreen> {
           ],
         ),
       ),
+
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            /// ===== FIXED PART (NO SCROLL) =====
             Center(
               child: Text(
                 "Connect your bank",
                 style: TextStyle(fontSize: 25.sp, fontWeight: FontWeight.w800),
               ),
             ),
+
             SizedBox(height: 20.h),
+
             Text(
               "SEARCH HERE",
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0.6.w,
-              ),
+              style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w600),
             ),
-            SizedBox(height: 8.5.h),
+
+            SizedBox(height: 8.h),
+
             CustomTextField(
               width: 342.w,
               labelText: "Search Bank Name Here",
-              fillColor: Color(0xfffF0F4F7),
+              fillColor: const Color(0xffF0F4F7),
               height: 58.h,
               borderRadius: 16,
               labelFontSize: 16.sp,
-              labelColor: Color(0xffff747C8099),
-
+              labelColor: const Color(0xff747C80),
               prefixIcon: Image.asset(
                 AppImages.searchIcon,
                 height: 16.h,
                 width: 16.w,
-                fit: BoxFit.contain,
               ),
             ),
+
             SizedBox(height: 30.h),
+
             Row(
               children: [
-                Container(
-                  height: 163.h,
-                  width: 148.w,
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 241, 233, 233),
-                    borderRadius: BorderRadius.circular(32.r),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 30),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Center(
-                          child: Image.asset(
-                            AppImages.addExpensesIcon,
-                            height: 48.h,
-                            width: 48.w,
-                          ),
-                        ),
-                        SizedBox(height: 10.h),
-                        Center(
-                          child: Text(
-                            "Add Expenses",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w800,
-                              fontSize: 16.sp,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                Text(
+                  "Popular institutions",
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
-                SizedBox(width: 20.w),
-                Container(
-                  height: 148.h,
-                  width: 148.w,
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 241, 233, 233),
-                    borderRadius: BorderRadius.circular(32.r),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 30),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Center(
-                          child: Image.asset(
-                            AppImages.addNewGoalIcon,
-                            height: 48.h,
-                            width: 48.w,
-                          ),
-                        ),
-                        SizedBox(height: 10.h),
-                        Center(
-                          child: Text(
-                            "New Goal",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w800,
-                              fontSize: 16.sp,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                const Spacer(),
+                Text(
+                  "view all",
+                  style: TextStyle(fontSize: 16.sp, color: Colors.blue),
                 ),
               ],
+            ),
+
+            SizedBox(height: 10.h),
+
+            /// ===== SCROLLABLE PART =====
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    /// GRID
+                    Row(
+                      children: [
+                        Container(
+                          height: 163.h,
+                          width: 148.w,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 241, 233, 233),
+                            borderRadius: BorderRadius.circular(32.r),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                AppImages.bankLogo,
+                                height: 52.h,
+                                width: 52.w,
+                              ),
+                              SizedBox(height: 10.h),
+                              Text(
+                                "Meezan Bank",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 16.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(width: 20.w),
+
+                        Container(
+                          height: 163.h,
+                          width: 148.w,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 241, 233, 233),
+                            borderRadius: BorderRadius.circular(32.r),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                AppImages.bankLogo,
+                                height: 52.h,
+                                width: 52.w,
+                              ),
+                              SizedBox(height: 10.h),
+                              Text(
+                                "UBL Bank",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 16.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(height: 10.h),
+
+                    Row(
+                      children: [
+                        Container(
+                          height: 163.h,
+                          width: 148.w,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 241, 233, 233),
+                            borderRadius: BorderRadius.circular(32.r),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                AppImages.bankLogo,
+                                height: 52.h,
+                                width: 52.w,
+                              ),
+                              SizedBox(height: 10.h),
+                              Text(
+                                "Meezan Bank",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 16.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(width: 20.w),
+
+                        Container(
+                          height: 163.h,
+                          width: 148.w,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 241, 233, 233),
+                            borderRadius: BorderRadius.circular(32.r),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                AppImages.bankLogo,
+                                height: 52.h,
+                                width: 52.w,
+                              ),
+                              SizedBox(height: 10.h),
+                              Text(
+                                "UBL Bank",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 16.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(height: 20.h),
+
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Others",
+                        style: TextStyle(
+                          fontSize: 19.sp,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: 10.h),
+
+                    /// LIST
+                    ListView.builder(
+                      itemCount: 5,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 10.h),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 16.w),
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  AppImages.bankLogo,
+                                  height: 32.h,
+                                  width: 32.w,
+                                ),
+                                SizedBox(width: 10.w),
+                                Text(
+                                  "Bank Name",
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                Spacer(),
+                                Image.asset(
+                                  AppImages.forwordArrow,
+                                  height: 16.h,
+                                  width: 16.w,
+                                ),
+                              ],
+                            ),
+                            height: 58.h,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 241, 233, 233),
+                              borderRadius: BorderRadius.circular(16.r),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

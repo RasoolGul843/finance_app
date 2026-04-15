@@ -1,7 +1,9 @@
 import 'package:finance_app/view/app_screens/authentication_screens/create_new_password.dart';
 import 'package:finance_app/view/app_screens/authentication_screens/forget_screen.dart';
 import 'package:finance_app/view/app_screens/authentication_screens/splash_screen.dart';
+import 'package:finance_app/view/app_screens/home_screen/add_new_category_screen.dart';
 import 'package:finance_app/view/app_screens/home_screen/body_screen.dart';
+import 'package:finance_app/view/app_screens/home_screen/change_password_screen.dart';
 import 'package:finance_app/view/app_screens/home_screen/connect_bank_screen.dart';
 import 'package:finance_app/view/app_screens/home_screen/home_screen.dart';
 import 'package:finance_app/view/app_screens/home_screen/new_goal_screen.dart';
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: const ConnectBankScreen(),
+          home: const AddNewCategoryScreen(),
         );
       },
     );

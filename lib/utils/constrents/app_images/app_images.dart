@@ -18,4 +18,7 @@ class AppImages {
   static const String addNewIncomeIcon = "assets/icons/addNewIncome.png";
   static const String addReciepnt = "assets/icons/addReciepnt.png";
   static const String searchIcon = "assets/icons/searchIcon.png";
+  static const String bankLogo = "assets/icons/bankLogo.png";
+  static const String forwordArrow = "assets/icons/forwordArrow.png";
+  static const String categoryIcon = "assets/icons/newcategoryIcon.png";
 }
