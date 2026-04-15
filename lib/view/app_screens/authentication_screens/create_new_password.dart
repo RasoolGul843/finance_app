@@ -112,7 +112,12 @@ class _ForgetScreenState extends State<CreateNewPassword> {
                   fontWeight: FontWeight.w700,
                   color: Color(0xffFFFFFF),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
+                },
               ),
             ),
             SizedBox(height: 50.h),

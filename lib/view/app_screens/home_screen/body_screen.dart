@@ -1,4 +1,6 @@
 import 'package:finance_app/utils/constrents/app_images/app_images.dart';
+import 'package:finance_app/view/app_screens/goal_screens/new_goal_screen.dart';
+import 'package:finance_app/view/app_screens/home_screen/add_expenses_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -59,78 +61,96 @@ class _BodyScreenState extends State<BodyScreen> {
             SizedBox(height: 30.h),
             Row(
               children: [
-                Container(
-                  height: 163.h,
-                  width: 148.w,
-                  decoration: BoxDecoration(
-                    color: Color(0xffFFFFFF),
-                    borderRadius: BorderRadius.circular(32.r),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 30, left: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          AppImages.addExpensesIcon,
-                          height: 48.h,
-                          width: 48.w,
-                        ),
-                        SizedBox(height: 10.h),
-                        Text(
-                          "Add Expenses",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16.sp,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddExpensesScreen(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    height: 163.h,
+                    width: 148.w,
+                    decoration: BoxDecoration(
+                      color: Color(0xffFFFFFF),
+                      borderRadius: BorderRadius.circular(32.r),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 30, left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            AppImages.addExpensesIcon,
+                            height: 48.h,
+                            width: 48.w,
                           ),
-                        ),
-                        SizedBox(height: 10.h),
-                        Text(
-                          "Log a daily spend",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: Colors.grey[600],
+                          SizedBox(height: 10.h),
+                          Text(
+                            "Add Expenses",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16.sp,
+                            ),
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 10.h),
+                          Text(
+                            "Log a daily spend",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(width: 20.w),
-                Container(
-                  height: 163.h,
-                  width: 148.w,
-                  decoration: BoxDecoration(
-                    color: Color(0xffFFFFFF),
-                    borderRadius: BorderRadius.circular(32.r),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 30, left: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          AppImages.addNewGoalIcon,
-                          height: 48.h,
-                          width: 48.w,
-                        ),
-                        SizedBox(height: 10.h),
-                        Text(
-                          "New Goal",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16.sp,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => NewGoalScreen()),
+                    );
+                  },
+                  child: Container(
+                    height: 163.h,
+                    width: 148.w,
+                    decoration: BoxDecoration(
+                      color: Color(0xffFFFFFF),
+                      borderRadius: BorderRadius.circular(32.r),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 30, left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            AppImages.addNewGoalIcon,
+                            height: 48.h,
+                            width: 48.w,
                           ),
-                        ),
-                        SizedBox(height: 10.h),
-                        Text(
-                          "Start saving up",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: Colors.grey[600],
+                          SizedBox(height: 10.h),
+                          Text(
+                            "New Goal",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16.sp,
+                            ),
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 10.h),
+                          Text(
+                            "Start saving up",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -139,40 +159,50 @@ class _BodyScreenState extends State<BodyScreen> {
             SizedBox(height: 30.h),
             Row(
               children: [
-                Container(
-                  height: 163.h,
-                  width: 148.w,
-                  decoration: BoxDecoration(
-                    color: Color(0xffFFFFFF),
-                    borderRadius: BorderRadius.circular(32.r),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 30, left: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          AppImages.addNewIncomeIcon,
-                          height: 48.h,
-                          width: 48.w,
-                        ),
-                        SizedBox(height: 10.h),
-                        Text(
-                          "Add Income",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16.sp,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddExpensesScreen(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    height: 163.h,
+                    width: 148.w,
+                    decoration: BoxDecoration(
+                      color: Color(0xffFFFFFF),
+                      borderRadius: BorderRadius.circular(32.r),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 30, left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            AppImages.addNewIncomeIcon,
+                            height: 48.h,
+                            width: 48.w,
                           ),
-                        ),
-                        SizedBox(height: 10.h),
-                        Text(
-                          "Record earnings",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: Colors.grey[600],
+                          SizedBox(height: 10.h),
+                          Text(
+                            "Add Income",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16.sp,
+                            ),
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 10.h),
+                          Text(
+                            "Record earnings",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

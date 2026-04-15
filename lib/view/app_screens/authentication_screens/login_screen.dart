@@ -1,5 +1,8 @@
 import 'package:finance_app/utils/constrents/app_images/app_images.dart';
 import 'package:finance_app/utils/constrents/app_text_style/app_textstyle.dart';
+import 'package:finance_app/view/app_screens/authentication_screens/create_account_screen.dart';
+import 'package:finance_app/view/app_screens/authentication_screens/forget_screen.dart';
+import 'package:finance_app/view/app_screens/home_screen/home_screen.dart';
 import 'package:finance_app/view/components/custom_button.dart';
 import 'package:finance_app/view/components/custom_textfield.dart';
 import 'package:flutter/material.dart';
@@ -91,13 +94,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Spacer(),
-                Text(
-                  "PASSWORD",
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 0.6.w,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ForgetScreen()),
+                    );
+                  },
+                  child: Text(
+                    "FORGET PASSWORD",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.6.w,
+                    ),
                   ),
                 ),
               ],
@@ -134,28 +145,46 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontWeight: FontWeight.w700,
                   color: Color(0xffFFFFFF),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  );
+                },
               ),
             ),
 
             SizedBox(height: 40.h),
-            Center(
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "Don't have an account?  ",
-                      style: TextStyle(color: Color(0xff596064), fontSize: 16),
-                    ),
-                    TextSpan(
-                      text: "Sign Up",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CreateAccountScreen(),
+                  ),
+                );
+              },
+              child: Center(
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Don't have an account?  ",
+                        style: TextStyle(
+                          color: Color(0xff596064),
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                  ],
+                      TextSpan(
+                        text: "Sign Up",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

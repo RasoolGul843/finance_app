@@ -1,5 +1,6 @@
 import 'package:finance_app/utils/constrents/app_images/app_images.dart';
 import 'package:finance_app/utils/constrents/app_text_style/app_textstyle.dart';
+import 'package:finance_app/view/app_screens/authentication_screens/login_screen.dart';
 import 'package:finance_app/view/components/custom_button.dart';
 import 'package:finance_app/view/components/custom_textfield.dart';
 import 'package:flutter/material.dart';
@@ -131,7 +132,12 @@ class _LoginScreenState extends State<CreateAccountScreen> {
                   fontWeight: FontWeight.w700,
                   color: Color(0xffFFFFFF),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
+                },
               ),
             ),
             SizedBox(height: 20.h),
@@ -162,7 +168,7 @@ class _LoginScreenState extends State<CreateAccountScreen> {
                     width: 130.w,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16.r),
-                      color: Colors.blueGrey,
+                      color: const Color.fromARGB(255, 226, 217, 217),
                     ),
                   ),
                   SizedBox(width: 10.w),
@@ -172,11 +178,16 @@ class _LoginScreenState extends State<CreateAccountScreen> {
                     child: Row(
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(top: 12.h, left: 15),
-                          child: Image.asset(AppImages.appLogo),
+                          padding: EdgeInsets.only(left: 15),
+                          child: Image.asset(
+                            AppImages.appleIcon,
+                            height: 22.h,
+                            width: 22.w,
+                          ),
                         ),
+                        SizedBox(width: 8.w),
                         Text(
-                          "Google",
+                          "Apple",
                           style: TextStyle(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w400,
@@ -188,30 +199,41 @@ class _LoginScreenState extends State<CreateAccountScreen> {
                     width: 130.w,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16.r),
-                      color: Colors.blueGrey,
+                      color: const Color.fromARGB(255, 226, 217, 217),
                     ),
                   ),
                 ],
               ),
             ),
             SizedBox(height: 40.h),
-            Center(
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "Already have an account?  ",
-                      style: TextStyle(color: Color(0xff596064), fontSize: 16),
-                    ),
-                    TextSpan(
-                      text: "Log In",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
+              },
+              child: Center(
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Already have an account?  ",
+                        style: TextStyle(
+                          color: Color(0xff596064),
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                  ],
+                      TextSpan(
+                        text: "Log In",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

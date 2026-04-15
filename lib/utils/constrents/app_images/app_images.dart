@@ -21,4 +21,7 @@ class AppImages {
   static const String bankLogo = "assets/icons/bankLogo.png";
   static const String forwordArrow = "assets/icons/forwordArrow.png";
   static const String categoryIcon = "assets/icons/newcategoryIcon.png";
+  static const String phoneIcon = "assets/icons/phoneIcon.png";
+  static const String appleIcon = "assets/icons/appleIcon.png";
+  static const String googleIcon = "assets/icons/googleIcon.png";
 }

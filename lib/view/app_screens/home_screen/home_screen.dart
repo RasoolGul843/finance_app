@@ -1,9 +1,9 @@
 import 'package:finance_app/utils/constrents/app_images/app_images.dart';
 import 'package:finance_app/view/app_screens/home_screen/body_screen.dart';
-import 'package:finance_app/view/app_screens/home_screen/goal_screen.dart';
+import 'package:finance_app/view/app_screens/goal_screens/goal_screen.dart';
 import 'package:finance_app/view/app_screens/home_screen/history_screen.dart';
 import 'package:finance_app/view/app_screens/home_screen/home_view_screen.dart';
-import 'package:finance_app/view/app_screens/home_screen/profile_screen.dart';
+import 'package:finance_app/view/app_screens/profile_screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {

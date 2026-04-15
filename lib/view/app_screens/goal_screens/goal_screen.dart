@@ -1,4 +1,5 @@
 import 'package:finance_app/utils/constrents/app_images/app_images.dart';
+import 'package:finance_app/view/app_screens/goal_screens/new_goal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -92,38 +93,51 @@ class _GoalScreenState extends State<GoalScreen> {
                 SizedBox(width: 10.w),
 
                 /// RIGHT SIDE BUTTON
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 12.h,
-                    horizontal: 16.w,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12.r),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 6,
-                        spreadRadius: 2,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(
-                        AppImages.addIcon,
-                        height: 24.h,
-                        width: 24.w,
-                        color: Colors.blue,
-                      ),
-                      SizedBox(height: 4.h),
-                      Text(
-                        "New Goal",
-                        style: TextStyle(fontSize: 12.sp, color: Colors.blue),
-                      ),
-                    ],
+                GestureDetector(
+                  onTap: () {
+                    onTap:
+                    () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NewGoalScreen(),
+                        ),
+                      );
+                    };
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 12.h,
+                      horizontal: 16.w,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.blue.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12.r),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 6,
+                          spreadRadius: 2,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          AppImages.addIcon,
+                          height: 24.h,
+                          width: 24.w,
+                          color: Colors.blue,
+                        ),
+                        SizedBox(height: 4.h),
+                        Text(
+                          "New Goal",
+                          style: TextStyle(fontSize: 12.sp, color: Colors.blue),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
