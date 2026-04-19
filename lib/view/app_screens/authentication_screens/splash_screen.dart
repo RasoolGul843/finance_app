@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:finance_app/utils/constrents/app_images/app_images.dart';
 import 'package:finance_app/utils/constrents/app_text_style/app_textstyle.dart';
+import 'package:finance_app/utils/share_prefrences/shared_prefrence.dart';
 import 'package:finance_app/view/app_screens/authentication_screens/login_screen.dart';
+import 'package:finance_app/view/app_screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -22,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void startLoading() {
-    Timer.periodic(const Duration(milliseconds: 100), (timer) {
+    Timer.periodic(const Duration(milliseconds: 100), (timer) async {
       setState(() {
         progress += 0.02;
       });
@@ -30,10 +32,22 @@ class _SplashScreenState extends State<SplashScreen> {
       if (progress >= 1.0) {
         timer.cancel();
 
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => LoginScreen()),
-        );
+        // ✅ CHECK TOKEN HERE
+        String? token = await GetSharedPrefService.getToken();
+
+        if (context.mounted) {
+          if (token != null && token.isNotEmpty) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const HomeScreen()),
+            );
+          } else {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const LoginScreen()),
+            );
+          }
+        }
       }
     });
   }
@@ -51,11 +65,8 @@ class _SplashScreenState extends State<SplashScreen> {
               children: [
                 Image.asset(AppImages.appLogo, height: 96.h, width: 96.w),
                 SizedBox(height: 20.h),
-
                 Text("Lumina Finance", style: AppTextStyles.headingbold),
-
                 SizedBox(height: 8.h),
-
                 Text("The Digital Sanctuary", style: AppTextStyles.subHeading),
               ],
             ),
@@ -76,9 +87,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                   ),
                 ),
-
                 SizedBox(height: 12.h),
-
                 Text("Securing your assets", style: AppTextStyles.subHeading),
               ],
             ),
