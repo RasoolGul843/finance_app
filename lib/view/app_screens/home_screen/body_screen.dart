@@ -1,6 +1,7 @@
 import 'package:finance_app/utils/constrents/app_images/app_images.dart';
 import 'package:finance_app/view/app_screens/goal_screens/new_goal_screen.dart';
 import 'package:finance_app/view/app_screens/home_screen/add_expenses_screen.dart';
+import 'package:finance_app/view/app_screens/home_screen/add_new_category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -207,40 +208,50 @@ class _BodyScreenState extends State<BodyScreen> {
                   ),
                 ),
                 SizedBox(width: 20.w),
-                Container(
-                  height: 163.h,
-                  width: 148.w,
-                  decoration: BoxDecoration(
-                    color: Color(0xffFFFFFF),
-                    borderRadius: BorderRadius.circular(32.r),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 30, left: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          AppImages.addReciepnt,
-                          height: 48.h,
-                          width: 48.w,
-                        ),
-                        SizedBox(height: 10.h),
-                        Text(
-                          "Scan Receipt",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16.sp,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddNewCategoryScreen(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    height: 163.h,
+                    width: 148.w,
+                    decoration: BoxDecoration(
+                      color: Color(0xffFFFFFF),
+                      borderRadius: BorderRadius.circular(32.r),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 30, left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            AppImages.addReciepnt,
+                            height: 48.h,
+                            width: 48.w,
                           ),
-                        ),
-                        SizedBox(height: 10.h),
-                        Text(
-                          "Smart AI capture",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: Colors.grey[600],
+                          SizedBox(height: 10.h),
+                          Text(
+                            "Scan Receipt",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16.sp,
+                            ),
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 10.h),
+                          Text(
+                            "Smart AI capture",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

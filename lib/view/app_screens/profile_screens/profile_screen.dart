@@ -2,8 +2,10 @@ import 'package:finance_app/view/app_screens/authentication_screens/login_screen
 import 'package:finance_app/view/app_screens/home_screen/connect_bank_screen.dart';
 import 'package:finance_app/view/app_screens/profile_screens/change_password_screen.dart';
 import 'package:finance_app/view/app_screens/profile_screens/edit_profile_screen.dart';
+import 'package:finance_app/view_models/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -18,349 +20,384 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF3F4F6),
       body: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
+        child: Consumer<UserProvider>(
+          builder: (context, userProvider, child) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
 
-            /// PROFILE IMAGE
-            Stack(
-              alignment: Alignment.bottomRight,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.blue, width: 3),
-                  ),
-                  child: const CircleAvatar(
-                    radius: 50,
-                    backgroundColor: Colors.black,
-                    backgroundImage: AssetImage("assets/profile.png"),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    onTap:
-                    () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditProfileScreen(),
+                  /// PROFILE IMAGE
+                  Stack(
+                    alignment: Alignment.bottomRight,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.blue, width: 3),
                         ),
-                      );
-                    };
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(7),
-                    decoration: const BoxDecoration(
-                      color: Colors.blue,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.edit,
-                      size: 16,
-                      color: Colors.white,
-                    ),
+                        child: CircleAvatar(
+                          radius: 40,
+                          backgroundImage:
+                              userProvider.userImage != null &&
+                                  userProvider.userImage!.isNotEmpty
+                              ? NetworkImage(userProvider.userImage!)
+                              : const AssetImage('assets/images/user.png')
+                                    as ImageProvider,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditProfileScreen(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(7),
+                          decoration: const BoxDecoration(
+                            color: Colors.blue,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.edit,
+                            size: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
 
-            const SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
-            /// NAME
-            const Text(
-              "Alex Morgan",
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900),
-            ),
+                  /// NAME
+                  //  Text(
+                  // userProvider.userName ?? "Guest User",
+                  // style: const TextStyle(
+                  //   color: Colors.black,
+                  //   fontSize: 16,
+                  //   fontWeight: FontWeight.w600,
+                  // ),
+                  Text(
+                    userProvider.userName ?? "Alex Morgan",
+                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900),
+                  ),
 
-            const SizedBox(height: 6),
+                  const SizedBox(height: 6),
 
-            /// EMAIL
-            const Text(
-              "alex.morgan@sanctuary.io",
-              style: TextStyle(color: Colors.grey, fontSize: 16),
-            ),
+                  /// EMAIL
+                  Text(
+                    userProvider.userEmail ?? "alex.morgan@sanctuary.io",
+                    style: TextStyle(color: Colors.grey, fontSize: 16),
+                  ),
 
-            const SizedBox(height: 30),
+                  const SizedBox(height: 30),
 
-            /// ===== Notifications =====
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(22.r),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 48.h,
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.blue.withOpacity(0.1),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        size: 46,
-                        Icons.notifications_none,
-                        color: Colors.blue,
-                      ),
+                  /// ===== Notifications =====
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
                     ),
-                    const SizedBox(width: 14),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            "Notifications",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
+                    child: Container(
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(22.r),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 48.h,
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Colors.blue.withOpacity(0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              size: 46,
+                              Icons.notifications_none,
+                              color: Colors.blue,
                             ),
                           ),
-                          SizedBox(height: 4),
-                          Text(
-                            "Manage your alerts and news",
-                            style: TextStyle(color: Colors.grey, fontSize: 14),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  "Notifications",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Text(
+                                  "Manage your alerts and news",
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Icon(
+                            size: 30,
+                            Icons.chevron_right,
+                            color: Colors.grey,
                           ),
                         ],
                       ),
                     ),
-                    const Icon(
-                      size: 30,
-                      Icons.chevron_right,
-                      color: Colors.grey,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            /// ===== Linked Banks =====
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ConnectBankScreen(),
-                    ),
-                  );
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 48.h,
-                        padding: const EdgeInsets.all(10),
+
+                  /// ===== Linked Banks =====
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ConnectBankScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: Colors.blue.withOpacity(0.1),
-                          shape: BoxShape.circle,
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        child: const Icon(
-                          size: 36,
-                          Icons.account_balance,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      const SizedBox(width: 14),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              "Linked Banks",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 48.h,
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.blue.withOpacity(0.1),
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                size: 36,
+                                Icons.account_balance,
+                                color: Colors.blue,
                               ),
                             ),
-                            SizedBox(height: 4),
-                            Text(
-                              "Connect your financial accounts",
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 14,
+                            const SizedBox(width: 14),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text(
+                                    "Linked Banks",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    "Connect your financial accounts",
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
                               ),
+                            ),
+                            const Icon(
+                              size: 30,
+                              Icons.chevron_right,
+                              color: Colors.grey,
                             ),
                           ],
                         ),
                       ),
-                      const Icon(
-                        size: 30,
-                        Icons.chevron_right,
-                        color: Colors.grey,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-
-            /// ===== Security =====
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChangePasswordScreen(),
                     ),
-                  );
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 48.h,
-                        padding: const EdgeInsets.all(10),
+
+                  /// ===== Security =====
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChangePasswordScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: Colors.blue.withOpacity(0.1),
-                          shape: BoxShape.circle,
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        child: const Icon(
-                          Icons.security,
-                          color: Colors.blue,
-                          size: 36,
-                        ),
-                      ),
-                      const SizedBox(width: 14),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              "Security",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 48.h,
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.blue.withOpacity(0.1),
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.security,
+                                color: Colors.blue,
+                                size: 36,
                               ),
                             ),
-                            SizedBox(height: 4),
-                            Text(
-                              "Password and biometric settings",
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 13,
+                            const SizedBox(width: 14),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text(
+                                    "Security",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    "Password and biometric settings",
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ],
                               ),
+                            ),
+                            const Icon(
+                              Icons.chevron_right,
+                              color: Colors.grey,
+                              size: 30,
                             ),
                           ],
                         ),
                       ),
-                      const Icon(
-                        Icons.chevron_right,
-                        color: Colors.grey,
-                        size: 30,
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            ),
 
-            /// ===== Help =====
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
+                  /// ===== Help =====
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
-                        color: Colors.blue.withOpacity(0.1),
-                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Icon(
-                        Icons.help_outline,
-                        color: Colors.blue,
-                        size: 36,
-                      ),
-                    ),
-                    const SizedBox(width: 14),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            "Help",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Colors.blue.withOpacity(0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.help_outline,
+                              color: Colors.blue,
+                              size: 36,
                             ),
                           ),
-                          SizedBox(height: 4),
-                          Text(
-                            "Support and documentation",
-                            style: TextStyle(color: Colors.grey, fontSize: 13),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  "Help",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Text(
+                                  "Support and documentation",
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Icon(
+                            Icons.chevron_right,
+                            color: Colors.grey,
+                            size: 30,
                           ),
                         ],
                       ),
                     ),
-                    const Icon(
-                      Icons.chevron_right,
-                      color: Colors.grey,
-                      size: 30,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            const Spacer(),
-
-            /// SIGN OUT BUTTON
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                  );
-                },
-                child: Container(
-                  height: 58,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.red.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(30),
-                    border: Border.all(color: Colors.red.shade200),
                   ),
-                  child: const Center(
-                    child: Text(
-                      "Sign Out",
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
+
+                  const Spacer(),
+
+                  /// SIGN OUT BUTTON
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 58,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.red.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: Colors.red.shade200),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            "Sign Out",
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-            ),
 
-            const SizedBox(height: 20),
-          ],
+                  const SizedBox(height: 20),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

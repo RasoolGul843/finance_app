@@ -1,8 +1,10 @@
 import 'package:finance_app/utils/constrents/app_images/app_images.dart';
 import 'package:finance_app/view/components/custom_button.dart';
 import 'package:finance_app/view/components/custom_textfield.dart';
+import 'package:finance_app/view_models/categories_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class NewGoalScreen extends StatefulWidget {
   const NewGoalScreen({super.key});
@@ -13,6 +15,19 @@ class NewGoalScreen extends StatefulWidget {
 
 class _NewGoalScreenState extends State<NewGoalScreen> {
   DateTime? selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+
+    /// ✅ LOAD CATEGORIES
+    Future.microtask(() {
+      Provider.of<CategoryProvider>(
+        context,
+        listen: false,
+      ).getAllCategoriesFunction();
+    });
+  }
 
   Future<void> _pickDate() async {
     DateTime? picked = await showDatePicker(
@@ -53,10 +68,19 @@ class _NewGoalScreenState extends State<NewGoalScreen> {
     return months[month];
   }
 
+  /// ✅ HEX COLOR CONVERTER
+  Color hexToColor(String? hex) {
+    if (hex == null || hex.isEmpty) return Colors.blue;
+    hex = hex.replaceAll("#", "");
+    if (hex.length == 6) hex = "FF$hex";
+    return Color(int.parse(hex, radix: 16));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.h),
         child: CustomButton(
@@ -125,88 +149,109 @@ class _NewGoalScreenState extends State<NewGoalScreen> {
               ),
 
               SizedBox(height: 45.h),
-              Text(
-                "Goal Name",
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.6.w,
-                ),
-              ),
 
-              SizedBox(height: 8.5.h),
+              /// GOAL NAME
               CustomTextField(
                 width: 342.w,
                 labelText: "Enter Your Goal Name",
-                fillColor: Color(0xfffF0F4F7),
+                fillColor: const Color(0xffF0F4F7),
                 height: 58.h,
                 borderRadius: 16,
                 labelFontSize: 16.sp,
-                labelColor: Color(0xffff747C8099),
-
+                labelColor: const Color(0xff747C80),
                 prefixIcon: Image.asset(
                   AppImages.goalIcon,
                   height: 16.h,
                   width: 16.w,
-                  fit: BoxFit.contain,
                 ),
               ),
+
               SizedBox(height: 10.h),
 
-              /// TARGET AMOUNT
               _targetAmountCard(),
 
               SizedBox(height: 10.h),
 
-              /// TARGET DATE
               _targetDateCard(),
+
+              SizedBox(height: 10.h),
+
               Text(
-                "category",
+                "Category",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
-                  letterSpacing: 0.6.w,
                 ),
               ),
+
               SizedBox(height: 10.h),
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 10,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 3.28,
-                ),
-                itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xffF2F5F7),
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            AppImages.addIcon,
-                            height: 25.h,
-                            color: Colors.blue,
+
+              /// ✅ CATEGORY GRID (FULL DYNAMIC)
+              Consumer<CategoryProvider>(
+                builder: (context, provider, child) {
+                  if (provider.loading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  final categories = provider.categories;
+
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: categories.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          childAspectRatio: 3.28,
+                        ),
+                    itemBuilder: (context, index) {
+                      final category = categories[index];
+                      final color = hexToColor(category['color']);
+
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xffF2F5F7),
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              /// ICON
+                              Image.network(
+                                category['icon'] ?? "",
+                                height: 25.h,
+                                width: 25.w,
+                                color: color,
+                                fit: BoxFit.contain,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(
+                                    AppImages.addIcon,
+                                    height: 25.h,
+                                    color: color,
+                                  );
+                                },
+                              ),
+
+                              SizedBox(width: 20.w),
+
+                              /// NAME
+                              Text(
+                                category['name'] ?? "No Name",
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
-                          SizedBox(width: 30.w),
-                          Text(
-                            "Travel",
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                        ),
+                      );
+                    },
                   );
                 },
               ),
@@ -217,7 +262,6 @@ class _NewGoalScreenState extends State<NewGoalScreen> {
     );
   }
 
-  /// 🔵 TARGET AMOUNT CARD
   Widget _targetAmountCard() {
     return Container(
       width: double.infinity,
@@ -226,114 +270,40 @@ class _NewGoalScreenState extends State<NewGoalScreen> {
         color: const Color(0xffF2F5F7),
         borderRadius: BorderRadius.circular(18.r),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Text(
-            "Target Amount",
-            style: TextStyle(
-              color: Colors.black87,
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w500,
+          Text("\$", style: TextStyle(fontSize: 24.sp)),
+          Expanded(
+            child: TextField(
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                hintText: "0.00",
+              ),
             ),
-          ),
-          SizedBox(height: 8.h),
-
-          /// 💰 INPUT ROW
-          Row(
-            children: [
-              Text(
-                "\$ ",
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 24.sp,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-
-              /// INPUT FIELD
-              Expanded(
-                child: TextField(
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  style: TextStyle(
-                    fontSize: 24.sp,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
-                  decoration: InputDecoration(
-                    hintText: "0.00",
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    border: InputBorder.none,
-                    isDense: true,
-                    contentPadding: EdgeInsets.zero,
-                  ),
-                ),
-              ),
-            ],
           ),
         ],
       ),
     );
   }
 
-  /// 🔵 TARGET DATE CARD
   Widget _targetDateCard() {
     return GestureDetector(
       onTap: _pickDate,
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 18.h),
+        padding: EdgeInsets.all(18.w),
         decoration: BoxDecoration(
           color: const Color(0xffF2F5F7),
           borderRadius: BorderRadius.circular(18.r),
         ),
         child: Row(
           children: [
-            /// CALENDAR ICON
-            Container(
-              padding: EdgeInsets.all(8.w),
-              decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-              child: Icon(
-                Icons.calendar_today,
-                color: Colors.blue,
-                size: 18.sp,
-              ),
-            ),
-
-            SizedBox(width: 12.w),
-
-            /// TEXTS
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Target Date",
-                  style: TextStyle(
-                    color: Colors.black87,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(height: 6.h),
-                Text(
-                  formattedDate,
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
+            const Icon(Icons.calendar_today, color: Colors.blue),
+            SizedBox(width: 10.w),
+            Text(formattedDate),
           ],
         ),
       ),

@@ -1,49 +1,79 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GetSharedPrefService {
-  static const _tokenKey = 'auth_token';
-  final _userIdKey = 'user_id';
-  static const _isCompleteProfileKey = 'is_complete_profile';
-
+  /// SAVE TOKEN + USER ID
   Future<void> saveAuthData({
     required String token,
     required String userId,
   }) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_tokenKey, token);
-    await prefs.setString(_userIdKey, userId);
+    await prefs.setString("token", token);
+    await prefs.setString("userId", userId);
   }
 
-  Future<String?> getUserId() async {
+  /// SAVE USER DATA
+  Future<void> saveUserData({
+    required String name,
+    required String image,
+    required String email,
+  }) async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_userIdKey);
+    await prefs.setString("name", name);
+    await prefs.setString("image", image);
+    await prefs.setString("email", email);
   }
 
+  /// GET TOKEN
   static Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_tokenKey);
+    return prefs.getString("token");
   }
 
-  static Future<bool?> getIsCompleteProfile() async {
+  /// GET USER ID
+  Future<String?> getUserId() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_isCompleteProfileKey);
+    return prefs.getString("userId");
   }
 
-  static Future<void> setProfileComplete(bool isComplete) async {
+  /// GET NAME
+  Future<String?> getUserName() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_isCompleteProfileKey, isComplete);
+    return prefs.getString("name");
   }
 
-  static Future<void> clearAuthData() async {
+  /// GET IMAGE
+  Future<String?> getUserImage() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_tokenKey);
-
-    await prefs.remove(_isCompleteProfileKey);
+    return prefs.getString("image");
   }
 
-  static Future<bool> hasAuthData() async {
+  /// GET EMAIL
+  Future<String?> getUserEmail() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.containsKey(_tokenKey) &&
-        prefs.containsKey(_isCompleteProfileKey);
+    return prefs.getString("email");
+  }
+
+  /// LOGOUT
+  Future<void> clearAll() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
   }
 }
+
+// class Constants {
+//   static const String baseUrl =
+//       "https://finance-app-backend-1-0s2r.onrender.com/api";
+
+//   // USER
+//   static const String createUserUrl = "/users/register";
+//   static const String loginUrl = "/users/login";
+//   static const String updateProfileUrl = "/users/update-profile";
+//   static const String getProfileUrl = "/users/profile";
+
+//   // CATEGORY
+//   static const String createCategoryUrl = "/categories/create";
+//   static const String getCategoriesUrl = "/categories";
+//   static const String getCategoryByIdUrl = "/categories/";
+//   static const String updateCategoryUrl = "/categories/";
+//   static const String deleteCategoryUrl = "/categories/";
+// }

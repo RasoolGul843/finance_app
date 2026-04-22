@@ -3,39 +3,112 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class NetworkService {
-  String _defaultContentType = 'application/json; charset=utf-8';
-
-  Future<dynamic> postApi({
+  /// POST API
+  /// AUTHORIZED POST
+  Future<dynamic> authorizedPostApi({
     required String url,
-    required Map<String, dynamic> body,
+    required dynamic body,
+
+    required BuildContext context,
+  }) async {
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(body),
+    );
+
+    return _returnResponse(response);
+  }
+
+  Future<dynamic> tokenAuthorizedPostApi({
+    required String url,
+    required dynamic body,
+    required String token,
+    required BuildContext context,
+  }) async {
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+      },
+      body: jsonEncode(body),
+    );
+
+    return _returnResponse(response);
+  }
+
+  /// PUT API (AUTHORIZED)
+  Future<dynamic> authorizedPutApi({
+    required String url,
+    required dynamic body,
+    required String token,
     required BuildContext context,
   }) async {
     try {
-      print("POST URL ----> $url");
-      print("POST BODY ----> $body");
-
-      final http.Response response = await http.post(
+      final response = await http.put(
         Uri.parse(url),
-        headers: {"Content-Type": _defaultContentType},
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
         body: jsonEncode(body),
       );
 
-      print("STATUS: ${response.statusCode}");
-      print("BODY: ${response.body}");
-
-      // ✅ ALWAYS USE RESPONSE.BODY HERE (SAFE)
-      final decoded = jsonDecode(response.body);
-
-      print("DECODED RESPONSE: $decoded");
-
-      if (response.statusCode >= 200 && response.statusCode < 300) {
-        return decoded;
-      } else {
-        throw Exception(decoded['message'] ?? 'Server error');
-      }
+      return _returnResponse(response);
     } catch (e) {
-      print("NETWORK ERROR: $e");
-      rethrow;
+      throw Exception("PUT API ERROR: $e");
+    }
+  }
+
+  /// GET API (AUTHORIZED)
+  Future<dynamic> getApi({required String url, required String token}) async {
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {"Authorization": "Bearer $token"},
+      );
+
+      return _returnResponse(response);
+    } catch (e) {
+      throw Exception("GET API ERROR: $e");
+    }
+  }
+
+  /// DELETE API
+  Future<dynamic> deleteApi({
+    required String url,
+    required String token,
+  }) async {
+    final response = await http.delete(
+      Uri.parse(url),
+      headers: {"Authorization": "Bearer $token"},
+    );
+
+    return _returnResponse(response);
+  }
+
+  /// COMMON RESPONSE HANDLER
+  dynamic _returnResponse(http.Response response) {
+    switch (response.statusCode) {
+      case 200:
+      case 201:
+        return jsonDecode(response.body);
+
+      case 400:
+        throw Exception(jsonDecode(response.body)['message']);
+
+      case 401:
+        throw Exception("Unauthorized");
+
+      case 404:
+        throw Exception("Not Found");
+
+      case 500:
+        throw Exception("Server Error");
+
+      default:
+        throw Exception("Unexpected Error: ${response.statusCode}");
     }
   }
 }

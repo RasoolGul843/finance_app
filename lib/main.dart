@@ -10,6 +10,7 @@ import 'package:finance_app/view/app_screens/home_screen/connect_bank_screen.dar
 import 'package:finance_app/view/app_screens/profile_screens/edit_profile_screen.dart';
 import 'package:finance_app/view/app_screens/home_screen/home_screen.dart';
 import 'package:finance_app/view/app_screens/goal_screens/new_goal_screen.dart';
+import 'package:finance_app/view_models/categories_provider.dart';
 import 'package:finance_app/view_models/user_provider.dart';
 
 import 'package:flutter/material.dart';
@@ -19,7 +20,10 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => UserProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => CategoryProvider()),
+      ],
       child: const MyApp(),
     ),
   );

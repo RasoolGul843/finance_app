@@ -1,6 +1,8 @@
 import 'package:finance_app/view/components/custom_button.dart';
+import 'package:finance_app/view_models/categories_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class AddNewCategoryScreen extends StatefulWidget {
   const AddNewCategoryScreen({super.key});
@@ -12,6 +14,8 @@ class AddNewCategoryScreen extends StatefulWidget {
 class _AddNewCategoryScreenState extends State<AddNewCategoryScreen> {
   int selectedIconIndex = 1;
   int selectedColorIndex = 0;
+
+  final TextEditingController nameController = TextEditingController();
 
   final List<IconData> icons = [
     Icons.home_outlined,
@@ -43,24 +47,50 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(24.w, 10.h, 24.w, 10.h),
-          child: CustomButton(
-            height: 59,
-            width: double.infinity,
-            text: "Create Category",
-            backgroundColor: const Color(0xFF4388FD),
-            borderRadius: 16,
-            textStyle: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
+
+      /// ✅ CONSUMER ADDED HERE
+      bottomNavigationBar: Consumer<CategoryProvider>(
+        builder: (context, provider, child) {
+          return SafeArea(
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(24.w, 10.h, 24.w, 10.h),
+              child: CustomButton(
+                height: 59,
+                width: double.infinity,
+                text: provider.loading ? "Creating..." : "Create Category",
+                backgroundColor: const Color(0xFF4388FD),
+                borderRadius: 16,
+                textStyle: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+                onTap: () {
+                  /// ✅ VALIDATION
+                  if (nameController.text.trim().isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Please enter category name"),
+                      ),
+                    );
+                    return;
+                  }
+
+                  /// ✅ DATA SEND TO API
+                  final data = {
+                    "name": nameController.text.trim(),
+                    "icon": icons[selectedIconIndex].codePoint.toString(),
+                    "color": colors[selectedColorIndex].value.toString(),
+                  };
+
+                  provider.createCategoryFunction(data, context);
+                },
+              ),
             ),
-            onTap: () {},
-          ),
-        ),
+          );
+        },
       ),
+
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -148,6 +178,9 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen> {
                     SizedBox(width: 10.w),
                     Expanded(
                       child: TextField(
+                        controller: nameController,
+
+                        /// ✅ ADDED
                         decoration: InputDecoration(
                           hintText: "Enter Category Name",
                           border: InputBorder.none,

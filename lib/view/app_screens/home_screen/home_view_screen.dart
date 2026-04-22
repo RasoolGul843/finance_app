@@ -1,5 +1,7 @@
+import 'package:finance_app/view_models/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class HomeViewScreen extends StatefulWidget {
   const HomeViewScreen({super.key});
@@ -11,6 +13,18 @@ class HomeViewScreen extends StatefulWidget {
 class _HomeViewScreenState extends State<HomeViewScreen> {
   double totalBudget = 5000;
   double spentAmount = 4250;
+  @override
+  void initState() {
+    super.initState();
+
+    /// ✅ LOAD USER DATA
+    Future.microtask(() {
+      Provider.of<UserProvider>(context, listen: false).loadUserFromPrefs();
+      print("user name ---------> ${UserProvider().userName}");
+      print("user email ---------> ${UserProvider().userEmail}");
+      print("user image ---------> ${UserProvider().userImage}");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,22 +35,38 @@ class _HomeViewScreenState extends State<HomeViewScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Row(
-          children: const [
-            CircleAvatar(
-              radius: 18,
-              backgroundImage: AssetImage('assets/images/user.png'),
-            ),
-            SizedBox(width: 10),
-            Text(
-              "Rasool Gul",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
+        title: Consumer<UserProvider>(
+          builder: (context, userProvider, child) {
+            return Row(
+              children: [
+                CircleAvatar(
+                  radius: 18,
+                  backgroundImage:
+                      (userProvider.userImage != null &&
+                          userProvider.userImage!.isNotEmpty)
+                      ? NetworkImage(userProvider.userImage!)
+                      : const AssetImage('assets/images/user.png')
+                            as ImageProvider,
+                ),
+                const SizedBox(width: 10),
+
+                /// ✅ NAME + EMAIL
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      userProvider.userName ?? "Guest User",
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
         ),
       ),
 
